@@ -1,7 +1,7 @@
 from tkinter import ttk  # Normal Tkinter.* widgets are not themed!
 from ttkthemes import ThemedTk
-import sqlite3 as sql
 import Opciones_CRUD as operaciones
+from utilidades import *
 
 
 
@@ -19,27 +19,28 @@ def creacion_Interfaz_Inicial(nombre):
     ttk.Label(text="Gestión de Usuarios",font=("Arial",20)).place(relx=0.5,rely=0.1,anchor="n")
     ttk.Button(frame,text=nombre,command=lambda : operaciones.interfaz(window),style=".TButton").place(relx=0.5, rely=0.5, anchor="center")
     window.mainloop()
-
+    
 
 def inicio_programa():
+    #Creamos carpeta BBDD para la base de datos y tenerlo mejor estructurado.
+    crearCarpetaBBDD()
+
     #Crea , conecta BBDD
-    miConexion=sql.connect("BBDD/Gestion_Usuarios")
-    miCursor=miConexion.cursor()
+    conn=conectarBBDD()
     #Seleccionamos dentro de squlite_master para ver si contiene la tabla usuario
-    comprobarTabla= miCursor.execute("SELECT name FROM sqlite_master WHERE name='USUARIOS'")
+    comprobarTabla= conn[1].execute("SELECT name FROM sqlite_master WHERE name='USUARIOS'")
 
 
     #Si la contiene se creara tabla y tendremos la interfaz con el boton crear, en caso contrario será conectar
     if comprobarTabla.fetchone() is None:
+        conn[1].execute("CREATE TABLE USUARIOS (ID INTEGER PRIMARY KEY AUTOINCREMENT,USERNAME VARCHAR(25), PASSWORD VARCHAR(20), NOMBRE VARCHAR(25),APELLIDO VARCHAR(50),DIRECCION VARCHAR(50))")
         creacion_Interfaz_Inicial("Crear")
-        miCursor.execute("CREATE TABLE USUARIOS (ID INTEGER PRIMARY KEY AUTOINCREMENT,USERNAME VARCHAR(25), PASSWORD VARCHAR(20), NOMBRE VARCHAR(25),DIRECCION VARCHAR(50), COMENTARIO TEXT(250))")
-    
+        
     else: 
         creacion_Interfaz_Inicial("Conectar")
         
     #Cerramos conexion y cursor
-    miCursor.close()
-    miConexion.close()
+    desconectarBBDD(conn[0],conn[1])
 
 #Iniciamos Programa
 
