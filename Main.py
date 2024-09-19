@@ -1,7 +1,7 @@
 from tkinter import ttk  # Normal Tkinter.* widgets are not themed!
 from ttkthemes import ThemedTk
-import Opciones_CRUD as operaciones
-from utilidades import *
+import interfaz_principal as operaciones
+from utilidades import conectarBBDD,desconectarBBDD,crearCarpetaBBDD
 
 
 

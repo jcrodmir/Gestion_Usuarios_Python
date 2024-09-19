@@ -25,8 +25,6 @@ def interfaz(pantalla_inicial):
 
     window.mainloop()
 
-def probar():
-    print("Le di")
     
 
     
