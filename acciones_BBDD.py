@@ -22,7 +22,8 @@ def descargar_datos_usuario():
             writer = csv.writer(File)
             writer.writerows(resultado)
             mensaje.showinfo("Datos Creacion","Se ha descargado documento con todos los usuarios")
-        
+    else:
+        mensaje.showinfo("AVISO","No hay usuarios guardados en la BBDD") 
 def id_user(*args):
     
     id=args[0].get()

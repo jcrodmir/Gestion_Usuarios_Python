@@ -1,5 +1,4 @@
-from tkinter import ttk  # Normal Tkinter.* widgets are not themed!
-import tkinter as tk
+from tkinter import ttk 
 from ttkthemes import ThemedTk
 from Interfaces_CRUD import *
 
